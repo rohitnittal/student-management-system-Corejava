@@ -1,0 +1,102 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentManagementSystem {
+    private ArrayList<Student> students;
+
+    public StudentManagementSystem() {
+        students = new ArrayList<>();
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public void removeStudent(int id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
+                students.remove(student);
+                break;
+            }
+        }
+    }
+
+    public Student searchStudent(int id) {
+        for (Student student : students) {
+            if (student.getId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        StudentManagementSystem sms = new StudentManagementSystem();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. Add Student");
+            System.out.println("2. Remove Student");
+            System.out.println("3. Search Student");
+            System.out.println("4. Exit");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter student ID: ");
+                    int id = scanner.nextInt();
+                    System.out.println("Enter student name: ");
+                    String name = scanner.next();
+                    System.out.println("Enter student grade: ");
+                    int grade = scanner.nextInt();
+
+                    Student student = new Student(id, name, grade);
+                    sms.addStudent(student);
+                    break;
+                case 2:
+                    System.out.println("Enter student ID to remove: ");
+                    int idToRemove = scanner.nextInt();
+                    sms.removeStudent(idToRemove);
+                    break;
+                case 3:
+                    System.out.println("Enter student ID to search: ");
+                    int idToSearch = scanner.nextInt();
+                    Student searchedStudent = sms.searchStudent(idToSearch);
+
+                    if (searchedStudent != null) {
+                        System.out.println("Student found: " + searchedStudent.getName());
+                    } else {
+                        System.out.println("Student not found");
+                    }
+                    break;
+                case 4:
+                    System.exit(0);
+            }
+        }
+    }
+}
+
+class Student {
+    private int id;
+    private String name;
+    private int grade;
+
+    public Student(int id, String name, int grade) {
+        this.id = id;
+        this.name = name;
+        this.grade = grade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+}
